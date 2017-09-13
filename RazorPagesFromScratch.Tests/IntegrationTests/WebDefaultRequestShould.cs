@@ -11,7 +11,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 {
     public class WebDefaultRequestShould : IClassFixture<TestFixture<Startup>>
     {
-        private readonly TestServer _server;
+        //private readonly TestServer _server;
         private readonly HttpClient _client;
         public WebDefaultRequestShould(TestFixture<Startup> fixture)
         {
