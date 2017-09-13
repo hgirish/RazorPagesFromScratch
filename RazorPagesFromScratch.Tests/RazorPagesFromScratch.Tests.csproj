@@ -2,12 +2,10 @@
 <!-- see https://github.com/NuGet/Home/issues/4412 for more info -->
 <Target Name="CopyDepsFiles" AfterTargets="Build" Condition="'$(TargetFramework)'!=''">
   <ItemGroup>
-  <DepsFilePaths Include="$([System.IO.Path]::ChangeExtension('%(_ResolvedProjectReferencePaths.FullPath)', 
-  '.deps.json'))" />
+  <DepsFilePaths Include="$([System.IO.Path]::ChangeExtension('%(_ResolvedProjectReferencePaths.FullPath)', &#xD;&#xA;  '.deps.json'))" />
   </ItemGroup>
 
-  <Copy SourceFiles="%(DepsFilePaths.FullPath)" DestinationFolder="$(OutputPath)" 
-    Condition="Exists('%(DepsFilePaths.FullPath)')" />
+  <Copy SourceFiles="%(DepsFilePaths.FullPath)" DestinationFolder="$(OutputPath)" Condition="Exists('%(DepsFilePaths.FullPath)')" />
 </Target>
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>

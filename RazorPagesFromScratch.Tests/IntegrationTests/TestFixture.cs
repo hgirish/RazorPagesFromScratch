@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RazorPagesFromScratch.Tests
+namespace RazorPagesFromScratch.Tests.IntegrationTests
 {
     public class TestFixture<TStartup> : IDisposable
     {

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace RazorPagesFromScratch.Tests
+namespace RazorPagesFromScratch.Tests.IntegrationTests
 {
     public class WebDefaultRequestShould : IClassFixture<TestFixture<Startup>>
     {
