@@ -25,7 +25,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
         public async Task ReturnsHelloWorld()
         {
             // Act 
-            var response = await _client.GetAsync("/Index");
+            var response = await _client.GetAsync("/");
             response.EnsureSuccessStatusCode();
 
             var responseString = await response.Content.ReadAsStringAsync();
@@ -36,5 +36,6 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 
 
         }
+        
     }
 }
