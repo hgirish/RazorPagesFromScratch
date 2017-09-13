@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPagesFromScratch", "RazorPagesFromScratch\RazorPagesFromScratch.csproj", "{D346AE97-FE8D-4AA1-81E2-C0EB289D1B22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPagesFromScratch", "RazorPagesFromScratch\RazorPagesFromScratch.csproj", "{D346AE97-FE8D-4AA1-81E2-C0EB289D1B22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPagesFromScratch.Tests", "RazorPagesFromScratch.Tests\RazorPagesFromScratch.Tests.csproj", "{116120F5-9607-461C-A301-9747763AD313}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D346AE97-FE8D-4AA1-81E2-C0EB289D1B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D346AE97-FE8D-4AA1-81E2-C0EB289D1B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D346AE97-FE8D-4AA1-81E2-C0EB289D1B22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{116120F5-9607-461C-A301-9747763AD313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{116120F5-9607-461C-A301-9747763AD313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{116120F5-9607-461C-A301-9747763AD313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{116120F5-9607-461C-A301-9747763AD313}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

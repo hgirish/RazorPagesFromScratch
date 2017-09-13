@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+<!-- see https://github.com/NuGet/Home/issues/4412 for more info -->
+<Target Name="CopyDepsFiles" AfterTargets="Build" Condition="'$(TargetFramework)'!=''">
+  <ItemGroup>
+  <DepsFilePaths Include="$([System.IO.Path]::ChangeExtension('%(_ResolvedProjectReferencePaths.FullPath)', 
+  '.deps.json'))" />
+  </ItemGroup>
+
+  <Copy SourceFiles="%(DepsFilePaths.FullPath)" DestinationFolder="$(OutputPath)" 
+    Condition="Exists('%(DepsFilePaths.FullPath)')" />
+</Target>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RazorPagesFromScratch\RazorPagesFromScratch.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170628-02" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.0" />
+    <PackageReference Include="xunit" Version="2.3.0-beta5-build3769" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta5-build3769" />
+  <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0-beta5-build3769" />
+  </ItemGroup>
+
+</Project>
