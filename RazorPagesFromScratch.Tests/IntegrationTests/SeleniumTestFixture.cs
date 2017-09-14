@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 
 namespace RazorPagesFromScratch.Tests.IntegrationTests
@@ -38,7 +39,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 
            BaseAddress = builder.ServerFeatures.Get<IServerAddressesFeature>().Addresses.Single();
             Console.WriteLine("baseaddress: {0}",BaseAddress);
-            webDriver = new FirefoxDriver();
+            webDriver = new ChromeDriver();
         }
 
         /// <summary>
