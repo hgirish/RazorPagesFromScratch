@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace RazorPagesFromScratch.Tests.IntegrationTests
+namespace RazorPagesFromScratch.Tests.UnitTests
 {
     public class NonExistingPageShould :  IClassFixture<TestFixture<Startup>>
     {

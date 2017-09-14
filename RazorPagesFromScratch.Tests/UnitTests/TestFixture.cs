@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace RazorPagesFromScratch.Tests.IntegrationTests
+namespace RazorPagesFromScratch.Tests.UnitTests
 {
     public class TestFixture<TStartup> : IDisposable
     {
@@ -24,7 +24,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
         {
             var startupAssembly = typeof(TStartup).GetTypeInfo().Assembly;
             var contentRoot = GetProjectPath(relativeTargetProjectParentDir, startupAssembly);
-            Console.WriteLine("ContentRoot: {0}", contentRoot);
+           // Console.WriteLine("ContentRoot: {0}", contentRoot);
             var builder = new WebHostBuilder()
                 .UseContentRoot(contentRoot)
                // .ConfigureServices(InitializeServices)

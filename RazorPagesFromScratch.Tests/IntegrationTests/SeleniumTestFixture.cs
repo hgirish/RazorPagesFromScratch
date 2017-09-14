@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 
 namespace RazorPagesFromScratch.Tests.IntegrationTests
 {
-   public class SeleniumTestFixture<TStartup> : IDisposable
+    public class SeleniumTestFixture<TStartup> : IDisposable
     {
         public string BaseAddress;
+        public IWebDriver webDriver;
 
         public SeleniumTestFixture() : this(Path.Combine(""))
         {
@@ -37,6 +38,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 
            BaseAddress = builder.ServerFeatures.Get<IServerAddressesFeature>().Addresses.Single();
             Console.WriteLine("baseaddress: {0}",BaseAddress);
+            webDriver = new FirefoxDriver();
         }
 
         /// <summary>
@@ -79,7 +81,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 
         public void Dispose()
         {
-            
+            webDriver.Dispose();
         }
     }
 }

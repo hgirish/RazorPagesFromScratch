@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace RazorPagesFromScratch.Tests.IntegrationTests
+namespace RazorPagesFromScratch.Tests.UnitTests
 {
     public class WebDefaultRequestShould : IClassFixture<TestFixture<Startup>>
     {
@@ -31,7 +26,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             var responseString = await response.Content.ReadAsStringAsync();
 
             // Assert
-            Assert.Equal("Hello World!", responseString);
+            Assert.Contains("To-Do", responseString);
 
 
 
