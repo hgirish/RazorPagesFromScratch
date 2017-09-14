@@ -5,6 +5,7 @@ using Xunit;
 
 namespace RazorPagesFromScratch.Tests.IntegrationTests
 {
+    [Trait("Category", "Integration")]
     public class NewVisitorTest : IClassFixture<SeleniumTestFixture<Startup>>
     {
         private readonly string _baseAddress;
@@ -24,7 +25,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             // She notices the page title and header mention to-do lists
             var body = webDriver.FindElement(By.TagName("body")).Text;
             Assert.NotEmpty(body);
-            Assert.Equal("To-Do", body);
+            Assert.Contains("Your To-Do list", body);
             Assert.Equal("To-Do lists", webDriver.Title);
 
             //She is invited to enter a to -do item straight away
@@ -37,7 +38,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 
             // When she hits enter, the page updates, now the page lists
             // "1: Buy peacock feathers" as an item in a to-do list table
-            inputbox.SendKeys("{ENTER}");
+            inputbox.SendKeys(Keys.Enter);
             Thread.Sleep(1000);
 
             var table = webDriver.FindElement(By.Id("id_list_table"));

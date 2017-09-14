@@ -1,13 +1,15 @@
 ﻿@page
 @model RazorPagesFromScratch.Pages.IndexModel
-@{
-}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <html>
 <head>
     <title>To-Do lists</title>
 </head>
 <body>
-    To-Do
-    <input id="id_new_item" placeholder="Enter a to-do item" />
+    <h1>Your To-Do list</h1>
+    <form method="post" action="/Index">
+        <input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
+    </form>
+    <table id="id_list_table"></table>
 </body>
 </html>
