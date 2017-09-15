@@ -11,9 +11,9 @@
         <input asp-for="Item.Text" placeholder="Enter a to-do item" />
     </form>
     <table id="id_list_table">
-        @foreach (var item in Model.Items)
+        @foreach (var item in Model.Items.Select((value,index) => new { value, index }))
         {
-            <tr><td>1: @item.Text</td></tr>
+            <tr><td>@(item.index+1): @item.value.Text</td></tr>
         }
        
     </table>

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading;
+using FluentAssertions;
 using OpenQA.Selenium;
 using Xunit;
 
@@ -63,7 +64,8 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
         {
            var table = webDriver.FindElement(By.Id("id_list_table"));
            var rows = table.FindElements(By.TagName("tr"));
-            Assert.Contains(rows, row => row.Text == rowText);
+            //Assert.Contains(rows, row => row.Text == rowText);
+            rows.Should().Contain(row => row.Text == rowText,$"[{rowText}] not found in table");
         }
     }
 }

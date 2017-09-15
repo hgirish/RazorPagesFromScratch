@@ -23,7 +23,7 @@ namespace RazorPagesFromScratch.Pages
         {
             var items = from m in _context.Items select m;
             Items = items.ToList();
-            System.Console.WriteLine("items counts:{0}", Items.Count);
+            
             return Page();
         }
         public async Task<IActionResult> OnPost()
