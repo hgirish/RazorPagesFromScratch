@@ -8,10 +8,14 @@
 <body>
     <h1>Your To-Do list</h1>
     <form method="post" action="/Index" asp-antiforgery="true">
-        <input asp-for="item_text" placeholder="Enter a to-do item" />
+        <input asp-for="Item.Text" placeholder="Enter a to-do item" />
     </form>
     <table id="id_list_table">
-        <tr><td>1: @Model.item_text</td></tr>
+        @foreach (var item in Model.Items)
+        {
+            <tr><td>1: @item.Text</td></tr>
+        }
+       
     </table>
 </body>
 </html>

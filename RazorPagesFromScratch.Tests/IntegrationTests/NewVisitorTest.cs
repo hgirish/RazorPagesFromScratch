@@ -29,7 +29,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             Assert.Equal("To-Do lists", webDriver.Title);
 
             //She is invited to enter a to -do item straight away
-            var inputbox = webDriver.FindElement(By.Id("item_text"));
+            var inputbox = webDriver.FindElement(By.Id("Item_Text"));
             Assert.Equal("Enter a to-do item", inputbox.GetAttribute("placeholder"));
 
             //She types "Buy peacock feathers" into a text box (Edith's hobby
@@ -39,12 +39,31 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             // When she hits enter, the page updates, now the page lists
             // "1: Buy peacock feathers" as an item in a to-do list table
             inputbox.SendKeys(Keys.Enter);
+            Thread.Sleep(1000);            
+            
+            CheckForRowInListTable("1: Buy peacock feathers");
+
+            //There is still a text box inviting her to add another item. She
+            // enters "Use peacock feathers to make a fly" (Edith is very
+            // methodical)
+            inputbox = webDriver.FindElement(By.Name("Item.Text"));
+            inputbox.SendKeys("Use peacock feathers to make a fly");
+            inputbox.SendKeys(Keys.Enter);
             Thread.Sleep(1000);
 
-            var table = webDriver.FindElement(By.Id("id_list_table"));
-            var rows = table.FindElements(By.TagName("tr"));
-            Assert.Contains(rows, row => row.Text == "1: Buy peacock feathers");
+            // The page updates again, and now shows both items on her list          
+            CheckForRowInListTable("2: Use peacock feathers to make a fly");
 
+
+
+
+        }
+
+        private void CheckForRowInListTable(string rowText)
+        {
+           var table = webDriver.FindElement(By.Id("id_list_table"));
+           var rows = table.FindElements(By.TagName("tr"));
+            Assert.Contains(rows, row => row.Text == rowText);
         }
     }
 }

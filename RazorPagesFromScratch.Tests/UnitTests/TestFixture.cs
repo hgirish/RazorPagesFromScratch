@@ -40,10 +40,12 @@ namespace RazorPagesFromScratch.Tests.UnitTests
 
         public HttpClient Client { get; }
 
+        public TestServer Server => _server;
+
         public void Dispose()
         {
             Client.Dispose();
-            _server.Dispose();
+            Server.Dispose();
         }
 
         protected virtual void InitializeServices(IServiceCollection services)
