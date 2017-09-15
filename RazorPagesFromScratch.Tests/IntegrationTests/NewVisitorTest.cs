@@ -29,7 +29,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             Assert.Equal("To-Do lists", webDriver.Title);
 
             //She is invited to enter a to -do item straight away
-            var inputbox = webDriver.FindElement(By.Id("id_new_item"));
+            var inputbox = webDriver.FindElement(By.Id("item_text"));
             Assert.Equal("Enter a to-do item", inputbox.GetAttribute("placeholder"));
 
             //She types "Buy peacock feathers" into a text box (Edith's hobby

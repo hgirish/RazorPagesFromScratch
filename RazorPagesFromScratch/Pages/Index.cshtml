@@ -7,9 +7,11 @@
 </head>
 <body>
     <h1>Your To-Do list</h1>
-    <form method="post" action="/Index">
-        <input name="item_text" id="id_new_item" placeholder="Enter a to-do item" />
+    <form method="post" action="/Index" asp-antiforgery="true">
+        <input asp-for="item_text" placeholder="Enter a to-do item" />
     </form>
-    <table id="id_list_table"></table>
+    <table id="id_list_table">
+        <tr><td>1: @Model.item_text</td></tr>
+    </table>
 </body>
 </html>

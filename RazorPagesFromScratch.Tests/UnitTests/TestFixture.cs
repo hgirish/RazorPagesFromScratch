@@ -28,13 +28,14 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             var builder = new WebHostBuilder()
                 .UseContentRoot(contentRoot)
                // .ConfigureServices(InitializeServices)
-                //.UseEnvironment("Development")
+                .UseEnvironment("Development")
                 .UseStartup(typeof(TStartup));
 
             _server = new TestServer(builder);
 
             Client = _server.CreateClient();
-            Client.BaseAddress = new Uri("http://localhost");
+
+            Client.BaseAddress = new Uri("http://localhost:5000");
         }
 
         public HttpClient Client { get; }
