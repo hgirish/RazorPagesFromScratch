@@ -9,4 +9,4 @@ References
 * https://github.com/aspnet/Docs/tree/master/aspnetcore/mvc/controllers/testing/sample/TestingControllersSample/tests/TestingControllersSample.Tests/IntegrationTests
 * http://www.stefanhendriks.com/2016/05/11/integration-testing-your-asp-net-core-app-dealing-with-anti-request-forgery-csrf-formdata-and-cookies/
 * [ChromeDriver Download](https://sites.google.com/a/chromium.org/chromedriver/downloads "Chromedriver Download")
-* [GeckoDriver Download] (https://github.com/mozilla/geckodriver/releases "GeckoDriver Download")
+* [GeckoDriver Download](https://github.com/mozilla/geckodriver/releases "GeckoDriver Download")
