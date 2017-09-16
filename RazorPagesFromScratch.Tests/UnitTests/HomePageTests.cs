@@ -7,10 +7,10 @@ using Xunit;
 namespace RazorPagesFromScratch.Tests.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class HomePageTests : IClassFixture<TestFixture<Startup>>
+    public class HomePageTests : IClassFixture<TestFixture<UnitTestStartup>>
     {
         private readonly HttpClient _client;
-        public HomePageTests(TestFixture<Startup> fixture)
+        public HomePageTests(TestFixture<UnitTestStartup> fixture)
         {
             _client = fixture.Client;
         }

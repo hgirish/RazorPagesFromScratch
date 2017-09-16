@@ -22,7 +22,7 @@ namespace RazorPagesFromScratch.Tests.UnitTests
 
         protected TestFixture(string relativeTargetProjectParentDir)
         {
-            var startupAssembly = typeof(TStartup).GetTypeInfo().Assembly;
+            var startupAssembly = typeof(Startup).GetTypeInfo().Assembly;
             var contentRoot = GetProjectPath(relativeTargetProjectParentDir, startupAssembly);
            // Console.WriteLine("ContentRoot: {0}", contentRoot);
             var builder = new WebHostBuilder()

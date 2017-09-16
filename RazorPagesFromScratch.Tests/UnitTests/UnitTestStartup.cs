@@ -1,12 +1,10 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RazorPagesFromScratch.Models;
-using System;
-
-namespace RazorPagesFromScratch.Tests.IntegrationTests
+namespace RazorPagesFromScratch.Tests.UnitTests
 {
-    public class IntegrationTestStartup : Startup
+    public class UnitTestStartup : Startup
     {
         public override void SetUpDatabase(IServiceCollection services)
         {
@@ -20,7 +18,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             //services.AddDbContext<AppDbContext>(
             //    options => options.UseSqlite(connection));
             //Console.WriteLine("Seupdatabase finished");
-            services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("IntegrationTestDatabase"));
+            services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("UnitTestDatabase"));
         }
         public override void EnsureDatabaseCreated(AppDbContext dbContext)
         {

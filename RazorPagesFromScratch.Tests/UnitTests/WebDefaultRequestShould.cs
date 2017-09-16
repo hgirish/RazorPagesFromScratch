@@ -4,11 +4,11 @@ using Xunit;
 
 namespace RazorPagesFromScratch.Tests.UnitTests
 {
-    public class WebDefaultRequestShould : IClassFixture<TestFixture<Startup>>
+    public class WebDefaultRequestShould : IClassFixture<TestFixture<UnitTestStartup>>
     {
         //private readonly TestServer _server;
         private readonly HttpClient _client;
-        public WebDefaultRequestShould(TestFixture<Startup> fixture)
+        public WebDefaultRequestShould(TestFixture<UnitTestStartup> fixture)
         {
             //_server = new TestServer(new WebHostBuilder()
             //    .UseContentRoot(@"D:\Dev\Projects\Learn\AspNetCore\RazorPagesFromScratch\RazorPagesFromScratch")
