@@ -7,11 +7,11 @@ using Xunit;
 namespace RazorPagesFromScratch.Tests.IntegrationTests
 {
     [Trait("Category", "Integration")]
-    public class NewVisitorTest : IClassFixture<SeleniumTestFixture<Startup>>
+    public class NewVisitorTest : IClassFixture<SeleniumTestFixture<IntegrationTestStartup>>
     {
         private readonly string _baseAddress;
         private readonly IWebDriver webDriver;
-        public NewVisitorTest(SeleniumTestFixture<Startup> fixture)
+        public NewVisitorTest(SeleniumTestFixture<IntegrationTestStartup> fixture)
         {
             _baseAddress = fixture.BaseAddress;
             webDriver = fixture.webDriver;

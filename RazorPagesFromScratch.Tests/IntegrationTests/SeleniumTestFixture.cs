@@ -23,7 +23,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 
         protected SeleniumTestFixture(string relativeTargetProjectParentDir)
         {
-            var startupAssembly = typeof(TStartup).GetTypeInfo().Assembly;
+            var startupAssembly = typeof(Startup).GetTypeInfo().Assembly;
             var contentRoot = GetProjectPath(relativeTargetProjectParentDir, startupAssembly);
 
             var builder = new WebHostBuilder()

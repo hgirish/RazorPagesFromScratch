@@ -18,7 +18,7 @@ namespace RazorPagesFromScratch.Pages
      
         [BindProperty]
         public Item Item { get; set; }
-        public List<Item> Items { get; set; }
+        public List<Item> Items { get; set; } = new List<Item>();
         public IActionResult OnGet()
         {
             var items = from m in _context.Items select m;
