@@ -22,20 +22,23 @@ namespace RazorPagesFromScratch.Tests.UnitTests
         }
         public override void EnsureDatabaseCreated(AppDbContext dbContext)
         {
-            dbContext.Database.OpenConnection();
-            dbContext.Database.EnsureCreated();
-
-            try
-            {
-                dbContext.Database.Migrate();
+            // Do nothing - Since we are using InMemoryDatabase
 
 
-            }
-            catch (Exception ex)
-            {
+            //dbContext.Database.OpenConnection();
+            //dbContext.Database.EnsureCreated();
 
-                Console.WriteLine(ex.Message);
-            }
+            //try
+            //{
+            //    dbContext.Database.Migrate();
+
+
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    Console.WriteLine(ex.Message);
+            //}
         }
     }
 }

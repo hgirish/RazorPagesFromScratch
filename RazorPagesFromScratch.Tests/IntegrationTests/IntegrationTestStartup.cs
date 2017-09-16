@@ -24,20 +24,22 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
         }
         public override void EnsureDatabaseCreated(AppDbContext dbContext)
         {
-            dbContext.Database.OpenConnection();
-            dbContext.Database.EnsureCreated();
+            // Do nothing
 
-            try
-            {
-                dbContext.Database.Migrate();
+            //dbContext.Database.OpenConnection();
+            //dbContext.Database.EnsureCreated();
+
+            //try
+            //{
+            //    dbContext.Database.Migrate();
 
 
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                Console.WriteLine(ex.Message);
-            }
+            //    Console.WriteLine(ex.Message);
+            //}
         }
     }
 }

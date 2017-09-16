@@ -28,7 +28,13 @@ namespace RazorPagesFromScratch
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            // within your Configure method:
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+              .CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetService<AppDbContext>();
+                EnsureDatabaseCreated(dbContext);
+            }
             app.UseMvc();
         }
         public virtual void SetUpDatabase(IServiceCollection services)
@@ -51,16 +57,17 @@ namespace RazorPagesFromScratch
 
         public virtual void EnsureDatabaseCreated(AppDbContext dbContext)
         {
-            try
-            {
-                dbContext.Database.Migrate();
+            dbContext.Database.Migrate();
+            //try
+            //{
+            //    dbContext.Database.Migrate();
 
-            }
-            catch (System.Exception ex)
-            {
+            //}
+            //catch (System.Exception ex)
+            //{
 
-                System.Console.WriteLine(ex.Message);
-            }
+            //    System.Console.WriteLine(ex.Message);
+            //}
 
         }
     }

@@ -15,7 +15,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
     {
         public string BaseAddress;
         public IWebDriver webDriver;
-
+        IWebHost builder;
         public SeleniumTestFixture() : this(Path.Combine(""))
         {
 
@@ -26,7 +26,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             var startupAssembly = typeof(Startup).GetTypeInfo().Assembly;
             var contentRoot = GetProjectPath(relativeTargetProjectParentDir, startupAssembly);
 
-            var builder = new WebHostBuilder()
+             builder = new WebHostBuilder()
                 .UseKestrel(options =>
                 {
                     options.Listen(IPAddress.Loopback, 5000);
@@ -83,6 +83,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
         public void Dispose()
         {
             webDriver.Dispose();
+            builder.Dispose();
         }
     }
 }

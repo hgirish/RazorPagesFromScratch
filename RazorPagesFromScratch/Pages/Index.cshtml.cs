@@ -22,7 +22,7 @@ namespace RazorPagesFromScratch.Pages
         public IActionResult OnGet()
         {
             var items = from m in _context.Items select m;
-            Items = items.ToList();
+            Items = items?.ToList();
             
             return Page();
         }
