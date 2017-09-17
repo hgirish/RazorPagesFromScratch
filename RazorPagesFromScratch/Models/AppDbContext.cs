@@ -14,5 +14,6 @@ namespace RazorPagesFromScratch.Models
         {
         }
         public DbSet<Item> Items { get; set; }
+        public DbSet<TodoList> TodoLists { get; set; }
     }
 }

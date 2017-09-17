@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+using RazorPagesFromScratch.Models;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -10,9 +14,13 @@ namespace RazorPagesFromScratch.Tests.UnitTests
     public class HomePageTests : IClassFixture<TestFixture<UnitTestStartup>>
     {
         private readonly HttpClient _client;
+        private AppDbContext _db;
+        TestServer _server;
         public HomePageTests(TestFixture<UnitTestStartup> fixture)
         {
             _client = fixture.Client;
+            _server = fixture.Server;
+            _db = _server.Host.Services.GetRequiredService<AppDbContext>();
         }
         [Fact]
         public async Task ReturnsCorrectHtml()
@@ -24,34 +32,30 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             Assert.EndsWith("</html>", html);
 
         }
-        [Fact]
-        public async Task CanSaveAPostRequest()
-        {
-            var response = await _client.GetAsync("/"); // this returns cookies in response
-            response.EnsureSuccessStatusCode();
-            string antiForgeryToken = await AntiForgeryHelper.ExtractAntiForgeryToken(response);
-            var formPostBodyData = new Dictionary<string, string>
-            {
-                { "__RequestVerificationToken", antiForgeryToken}, // Add token        
-                { "Item.Text", "A new list item"}
-            };
-            // Copy cookies from response
-            var requestMessage = PostRequestHelper.CreateWithCookiesFromResponse("/", formPostBodyData, response);
-            response = await _client.SendAsync(requestMessage);
+        
 
-            // response.EnsureSuccessStatusCode();
-            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
-            Assert.Equal("/", response.Headers.Location.ToString());
-            //string responseString = await response.Content.ReadAsStringAsync();
-            //System.Console.WriteLine($"Response String: {responseString}");
-            //Assert.Contains("A new list item", responseString);
-            //Assert.Contains("<h1>Your To-Do list</h1>", responseString);
-            //Assert.Contains("<table id=\"id_list_table\">", responseString);
-            //Assert.Contains("A new list item", responseString);
-            response = await _client.GetAsync("/"); // this returns cookies in response
+        [Fact]
+        public async Task DisplayAllItems()
+        {
+            var correctList = new TodoList();
+            _db.TodoLists.Add(correctList);
+            var otherList = new TodoList();
+            _db.TodoLists.Add(otherList);
+            //_db.SaveChanges();
+            
+            _db.Items.Add(new Item { Text = "itemey 1",List = correctList });
+            _db.Items.Add(new Item { Text = "itemey 2", List = correctList });
+            _db.Items.Add(new Item { Text = "Other list item 1", List = otherList });
+            _db.Items.Add(new Item { Text = "Other list item 2", List = otherList });
+            _db.SaveChanges();
+            System.Console.WriteLine("correctList.id: {0}", correctList.Id);
+            var response = await _client.GetAsync($"/lists/{correctList.Id}");
             response.EnsureSuccessStatusCode();
-           var responseString = await response.Content.ReadAsStringAsync();
-            Assert.Contains("A new list item", responseString);
+            var html = await response.Content.ReadAsStringAsync();
+            html.Should().Contain("itemey 1");
+            html.Should().Contain("itemey 2");
+            html.Should().NotContain("Other list item");
+
 
         }
     }

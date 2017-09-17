@@ -19,6 +19,13 @@ namespace RazorPagesFromScratch
             //});
             SetUpDatabase(services);
             services.AddMvc();
+                //.AddRazorPagesOptions(
+                //options =>
+                //{
+                //    options.RootDirectory = "/Pages";
+
+                //    options.Conventions.AddPageRoute("/Lists/Index", "Lists/{*url}");
+                //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,17 +64,18 @@ namespace RazorPagesFromScratch
 
         public virtual void EnsureDatabaseCreated(AppDbContext dbContext)
         {
-            dbContext.Database.Migrate();
-            //try
-            //{
-            //    dbContext.Database.Migrate();
+            dbContext.Database.OpenConnection();
+            dbContext.Database.EnsureCreated();
+            try
+            {
+                dbContext.Database.Migrate();
 
-            //}
-            //catch (System.Exception ex)
-            //{
+            }
+            catch (System.Exception ex)
+            {
 
-            //    System.Console.WriteLine(ex.Message);
-            //}
+                System.Console.WriteLine(ex.Message);
+            }
 
         }
     }

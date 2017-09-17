@@ -1,6 +1,9 @@
-﻿@page
-@model RazorPagesFromScratch.Pages.IndexModel
+﻿@page "{id:int}"
+@model RazorPagesFromScratch.Pages.Lists.IndexModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+}
+
 <html>
 <head>
     <title>To-Do lists</title>
@@ -15,7 +18,7 @@
         {
             <tr><td>@(item.index+1): @item.value.Text</td></tr>
         }
-       
+
     </table>
 </body>
 </html>
