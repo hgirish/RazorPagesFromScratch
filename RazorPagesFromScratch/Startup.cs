@@ -18,14 +18,14 @@ namespace RazorPagesFromScratch
             //    options.UseInMemoryDatabase("superlist-inmemory");
             //});
             SetUpDatabase(services);
-            services.AddMvc();
-                //.AddRazorPagesOptions(
-                //options =>
-                //{
-                //    options.RootDirectory = "/Pages";
+            services.AddMvc()
+                .AddRazorPagesOptions(
+                options =>
+                {
+                    options.RootDirectory = "/Pages";
 
-                //    options.Conventions.AddPageRoute("/Lists/Index", "Lists/{*url}");
-                //});
+                    options.Conventions.AddPageRoute("/Lists/AddItem", "Lists/{id:int}/AddItem");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

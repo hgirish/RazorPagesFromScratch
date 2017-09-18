@@ -2,6 +2,7 @@
 @model RazorPagesFromScratch.Pages.Lists.IndexModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
+    var listId = RouteData.Values["id"];
 }
 
 <html>
@@ -10,7 +11,7 @@
 </head>
 <body>
     <h1>Your To-Do list</h1>
-    <form method="post" action="/lists/new" asp-antiforgery="true">
+    <form method="post" action="/lists/@listId/AddItem" asp-antiforgery="true">
         <input asp-for="Item.Text" placeholder="Enter a to-do item" />
     </form>
     <table id="id_list_table">
