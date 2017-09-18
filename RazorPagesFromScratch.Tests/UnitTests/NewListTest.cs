@@ -16,7 +16,7 @@ namespace RazorPagesFromScratch.Tests.UnitTests
 {
     [Trait("Category","Unit")]
     [Trait("Name","NewList")]
-   public class NewListTest : TestFixture<UnitTestStartup>
+   public class NewListTest : TestBase
     {
         private readonly HttpClient _client;
         private AppDbContext _db;
@@ -31,14 +31,14 @@ namespace RazorPagesFromScratch.Tests.UnitTests
         [Fact]
         public async Task CanSaveAPostRequest()
         {
-            var response = await PostTextAsync("A new list item");
+            var correctList = SeedTodoList();
+            var response = await PostTextAsync("A new list item", correctList.Id);
             var items = _db.Items;
             items.Count().Should().Be(1);
             var new_item = items.First();
             new_item.Text.Should().Be("A new list item");
 
-            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
-            Assert.Equal("/lists/1/", response.Headers.Location.ToString());
+            
             response = await _client.GetAsync("/"); // this returns cookies in response
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
@@ -48,15 +48,24 @@ namespace RazorPagesFromScratch.Tests.UnitTests
         [Fact]
         public async Task RedirectsAfterPOSTAsync()
         {
-            var response = await PostTextAsync("A new list item");
-            var newList = _db.TodoLists.First();
-            response.AssertRedircts( $"/lists/{newList.Id}/");
+            var correctList = SeedTodoList();
+            var response = await PostTextAsync("A new list item", correctList.Id);
+            
+            response.AssertRedircts( $"/lists/{correctList.Id}/");
 
         }
-
+        [Fact]
+        public async Task PassesCorrectListToTemplateAsync()
+        {
+            var correctList = SeedTodoList();
+            var response = await Client.GetAsync($"/Lists/{correctList.Id}/");
+            response.EnsureSuccessStatusCode();
+            var responseString = await response.Content.ReadAsStringAsync();
+            responseString.Should().Contain($"action=\"/lists/{correctList.Id}/AddItem\"");
+        }
         
 
-        private async Task<HttpResponseMessage> PostTextAsync(string text)
+        private async Task<HttpResponseMessage> PostTextAsync(string text, int listId)
         {
             var response = await _client.GetAsync("/"); // this returns cookies in response
             response.EnsureSuccessStatusCode();
@@ -68,9 +77,18 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             };
             // Copy cookies from response
             var requestMessage = PostRequestHelper.CreateWithCookiesFromResponse(
-                "/lists/new", formPostBodyData, response);
+                $"/lists/{listId}/AddItem", formPostBodyData, response);
             response = await _client.SendAsync(requestMessage);
             return response;
+        }
+        private TodoList SeedTodoList()
+        {
+            var otherList = new TodoList();
+            var correctList = new TodoList();
+            db.TodoLists.Add(otherList);
+            db.TodoLists.Add(correctList);
+            db.SaveChanges();
+            return correctList;
         }
     }
 }

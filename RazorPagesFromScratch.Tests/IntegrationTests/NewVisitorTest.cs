@@ -78,18 +78,23 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 
             // she notices that her list has a unique URL
             var edithListUrl = _browser.Url;
-            Console.WriteLine(edithListUrl);
+            Console.WriteLine($"edithListUrl: {edithListUrl}");
             edithListUrl.Should().MatchRegex(_baseAddress + "/lists/.+");
 
             // Now a new user, Francis, comes along to the site.
             //// We use a new browser session to make sure that no information
             //// of Edith's is coming through from cookies etc
+            Console.WriteLine("Quit the browser");
             _browser.Quit();
+            Console.WriteLine("Start new browser");
             _browser = new ChromeDriver();
             // Francis visits the home page. There is no sign of Edith's
             // list
+            Console.WriteLine($"Francis goes to url: {_baseAddress} ");
             _browser.Navigate().GoToUrl(_baseAddress);
+            
             var page_text = _browser.FindElement(By.TagName("body")).Text;
+            Console.WriteLine($"francis page text: {page_text}");
             page_text.Should().NotContain("Buy peacock feathers");
             page_text.Should().NotContain("make a fly");
             IWebElement inputbox = FindItemTextInputBox();
@@ -98,6 +103,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             WaitForRowInListTable("1: Buy milk");
             // Francis gets his own unique URL
             var francis_list_url = _browser.Url;
+            Console.WriteLine($"francis_list_url: {francis_list_url}");
             francis_list_url.Should().MatchRegex(_baseAddress + "/lists/.+");
             francis_list_url.Should().NotBeSameAs(edithListUrl);
 
