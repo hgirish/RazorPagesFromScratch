@@ -115,6 +115,24 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 
             // Satisfied, they both go back to sleep
         }
+        [Fact]
+        public void TestLayoutAndStyling()
+        {
+            // Edith goes to the home page
+            _browser.Url = _baseAddress;
+            _browser.Manage().Window.Size = new System.Drawing.Size(1024, 768);
+
+            // She notices the input box is nicely centered
+            var inputbox = FindItemTextInputBox();
+            var x = inputbox.Location.X;
+            var y = inputbox.Location.Y;
+            var width = inputbox.Size.Width;
+           
+            var horizontalPosition = x + (width / 2);
+            var delta = Math.Abs(horizontalPosition - 512);
+            Console.WriteLine($"X: {x}, Y: {y}, width: {width}, horizontal postion:{horizontalPosition}, delta: {delta}");
+            delta.Should().BeLessOrEqualTo(10);
+        }
 
         private IWebElement FindItemTextInputBox()
         {

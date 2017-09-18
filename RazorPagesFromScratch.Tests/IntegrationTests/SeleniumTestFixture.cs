@@ -38,7 +38,12 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             builder.Start();
 
            BaseAddress = builder.ServerFeatures.Get<IServerAddressesFeature>().Addresses.Single();
-            Console.WriteLine("baseaddress: {0}",BaseAddress);
+            //Console.WriteLine("baseaddress: {0}",BaseAddress);
+            //var o = new ChromeOptions();
+            //o.AddArguments("disable-extensions");
+            //o.AddArguments("--start-maximized");
+
+            //webDriver = new ChromeDriver(o);
             webDriver = new ChromeDriver();
         }
 
