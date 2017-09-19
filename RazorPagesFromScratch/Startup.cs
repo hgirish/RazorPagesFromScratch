@@ -42,6 +42,7 @@ namespace RazorPagesFromScratch
                 var dbContext = serviceScope.ServiceProvider.GetService<AppDbContext>();
                 EnsureDatabaseCreated(dbContext);
             }
+            app.UseStaticFiles();
             app.UseMvc();
         }
         public virtual void SetUpDatabase(IServiceCollection services)

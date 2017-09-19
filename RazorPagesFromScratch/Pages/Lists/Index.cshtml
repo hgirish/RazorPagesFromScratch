@@ -5,21 +5,25 @@
     var listId = RouteData.Values["id"];
 }
 
-<html>
-<head>
-    <title>To-Do lists</title>
-</head>
-<body>
-    <h1>Your To-Do list</h1>
-    <form method="post" action="/lists/@listId/AddItem" asp-antiforgery="true">
-        <input asp-for="Item.Text" placeholder="Enter a to-do item" />
-    </form>
-    <table id="id_list_table">
-        @foreach (var item in Model.Items.Select((value,index) => new { value, index }))
-        {
-            <tr><td>@(item.index+1): @item.value.Text</td></tr>
-        }
+    <div class="col-md-6 col-md-offset-3 jumbotron">
+        <div class="text-center">
 
-    </table>
-</body>
-</html>
+
+            <h1>Your To-Do list</h1>
+            <form method="post" action="/lists/@listId/AddItem" asp-antiforgery="true">
+                <input asp-for="Item.Text" placeholder="Enter a to-do item" class="form-control input-lg" />
+            </form>
+        </div>
+    </div>
+
+   
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <table id="id_list_table" class="table">
+                @foreach (var item in Model.Items.Select((value, index) => new { value, index }))
+                {
+                    <tr><td>@(item.index + 1): @item.value.Text</td></tr>
+                }
+
+            </table>
+            </div></div>
