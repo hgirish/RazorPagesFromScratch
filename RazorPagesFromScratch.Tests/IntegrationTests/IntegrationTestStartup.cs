@@ -1,8 +1,6 @@
-﻿using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RazorPagesFromScratch.Models;
-using System;
 
 namespace RazorPagesFromScratch.Tests.IntegrationTests
 {
