@@ -25,7 +25,8 @@ namespace RazorPagesFromScratch.Tests.UnitTests
         {
             var response = await _client.GetAsync("/");
             var html = await response.Content.ReadAsStringAsync();
-            Assert.StartsWith("<html>", html);
+            
+            Assert.StartsWith("<!DOCTYPE html>", html);
             Assert.Contains("<title>To-Do lists</title>", html);
             Assert.EndsWith("</html>", html);
 

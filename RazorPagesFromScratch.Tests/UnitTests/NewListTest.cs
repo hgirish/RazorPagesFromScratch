@@ -30,13 +30,14 @@ namespace RazorPagesFromScratch.Tests.UnitTests
         {
             var correctList = SeedTodoList();
             var response = await PostTextAsync("A new list item", correctList.Id);
+            var redirectLocation = response.Headers.Location.ToString();
             var items = _db.Items;
             items.Count().Should().Be(1);
             var new_item = items.First();
             new_item.Text.Should().Be("A new list item");
 
             
-            response = await _client.GetAsync("/"); // this returns cookies in response
+            response = await _client.GetAsync(redirectLocation); // this returns cookies in response
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
             Assert.Contains("A new list item", responseString);
