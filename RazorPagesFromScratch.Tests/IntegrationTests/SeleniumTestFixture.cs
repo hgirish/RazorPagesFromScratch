@@ -45,12 +45,13 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 
            BaseAddress = builder.ServerFeatures.Get<IServerAddressesFeature>().Addresses.Single();
             //Console.WriteLine("baseaddress: {0}",BaseAddress);
-            //var o = new ChromeOptions();
+            var o = new ChromeOptions();
+            o.AddArguments("disable-infobars");
             //o.AddArguments("disable-extensions");
             //o.AddArguments("--start-maximized");
 
             //webDriver = new ChromeDriver(o);
-            webDriver = new ChromeDriver();
+            webDriver = new ChromeDriver(o);
         }
 
         /// <summary>
@@ -125,6 +126,44 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
                     }
                     Console.WriteLine("Going to sleep for half second");
                     Thread.Sleep(500);
+
+                }
+            }
+        }
+        public void WaitFor(Func<bool> fn)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("before fn()");
+                    bool success = fn();
+                    if (success)
+                    {
+                        break;
+                    }
+                    Console.WriteLine("after fn()");
+                    if (sw.ElapsedMilliseconds > MAX_WAIT)
+                    {
+                        Console.WriteLine("Elapsed miliseconds: {0}", sw.ElapsedMilliseconds);
+                        sw.Stop();
+                        webDriver.Quit();
+                        throw new Exception("timed out");
+                    }
+                }
+                catch (WebDriverException)
+                {
+                    if (sw.ElapsedMilliseconds > MAX_WAIT)
+                    {
+                        Console.WriteLine("Elapsed miliseconds: {0}", sw.ElapsedMilliseconds);
+                        sw.Stop();
+                        webDriver.Quit();
+                        throw;
+                    }
+                    Console.WriteLine("Going to sleep for half second");
+                    Thread.Sleep(500);
+
 
                 }
             }

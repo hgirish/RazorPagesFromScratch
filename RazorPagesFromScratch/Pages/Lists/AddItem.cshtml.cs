@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPagesFromScratch.Models;
 
@@ -18,21 +19,21 @@ namespace RazorPagesFromScratch.Pages.Lists
         }
         [BindProperty]
         public Item Item { get; set; }
-        public void OnGet()
-        {
-        }
+       
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public IActionResult OnPost(int id)
         {
-            Console.WriteLine($"AddItem OnPostAsync id: {id}");
+
             if (!ModelState.IsValid)
             {
-                return Page();
+                TempData["ModelState"] = ModelState;
+                var url = $"/lists/Index/?id={id}";
+                return Redirect(url);
             }
             var list = _context.TodoLists.Find(id);
             Item.List = list;
             _context.Items.Add(Item);
-            await _context.SaveChangesAsync();
+             _context.SaveChanges();
             return Redirect($"/lists/{list.Id}/");
         }
     }

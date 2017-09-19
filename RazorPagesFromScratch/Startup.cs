@@ -23,7 +23,6 @@ namespace RazorPagesFromScratch
                 options =>
                 {
                     options.RootDirectory = "/Pages";
-
                     options.Conventions.AddPageRoute("/Lists/AddItem", "Lists/{id:int}/AddItem");
                 });
         }

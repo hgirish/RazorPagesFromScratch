@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPagesFromScratch.Models;
 
@@ -22,7 +23,11 @@ namespace RazorPagesFromScratch.Pages.Lists
         {
             var items = from m in _context.Items where m.List.Id == id select m;
             Items = items.ToList();
-
+            if (TempData.ContainsKey("ModelState"))
+            {
+                ModelState.Merge((ModelStateDictionary)TempData["ModelState"]);
+            }
+                
             return Page();
         }
     }

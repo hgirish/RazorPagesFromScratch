@@ -3,20 +3,27 @@ using Microsoft.EntityFrameworkCore;
 using RazorPagesFromScratch.Models;
 using Xunit;
 using FluentAssertions;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace RazorPagesFromScratch.Tests.UnitTests
 {
     [Trait("Category", "Model")]
     public class ItemModelTests
     {
-        [Fact]
-        public void SavingAndRetrievingItems()
+        AppDbContext db;
+        public ItemModelTests()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Superlists")
                 .Options;
 
-            var db = new AppDbContext(options);
+             db = new AppDbContext(options);
+        }
+        [Fact]
+        public void SavingAndRetrievingItems()
+        {
+            
 
             var todoList = new TodoList();
             db.TodoLists.Add(todoList);
@@ -48,6 +55,22 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             secondSavedItem.List.Should().Equals(todoList);
 
             
+        }
+        [Fact]
+        public void test_cannot_save_empty_list_items()
+        {
+            var todoList = new TodoList();
+            db.TodoLists.Add(todoList);
+            db.SaveChanges();
+
+            var firstItem = new Item();
+            firstItem.Text = "";
+            firstItem.List = todoList;
+            db.Items.Add(firstItem);
+
+
+            Assert.Throws<ValidationException>(() => db.SaveChanges());
+
         }
     }
 }
