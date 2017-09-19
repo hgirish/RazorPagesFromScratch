@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.TestHost;
 using RazorPagesFromScratch.Models;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using FluentAssertions;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
 using RazorPagesFromScratch.Tests.Extensions;
 
 namespace RazorPagesFromScratch.Tests.UnitTests

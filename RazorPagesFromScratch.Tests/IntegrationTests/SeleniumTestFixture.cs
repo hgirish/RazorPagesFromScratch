@@ -7,15 +7,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
+using System.Diagnostics;
+using FluentAssertions;
+using System.Threading;
+using Xunit;
 
 namespace RazorPagesFromScratch.Tests.IntegrationTests
 {
+    [Trait("Category", "Integration")]
     public class SeleniumTestFixture<TStartup> : IDisposable
     {
         public string BaseAddress;
         public IWebDriver webDriver;
         IWebHost builder;
+        int MAX_WAIT = 10000;
         public SeleniumTestFixture() : this(Path.Combine(""))
         {
 
@@ -25,11 +30,12 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
         {
             var startupAssembly = typeof(Startup).GetTypeInfo().Assembly;
             var contentRoot = GetProjectPath(relativeTargetProjectParentDir, startupAssembly);
-
+            var random = new Random();
+            var listenPort = random.Next(10000, 20000);
              builder = new WebHostBuilder()
                 .UseKestrel(options =>
                 {
-                    options.Listen(IPAddress.Loopback, 5000);
+                    options.Listen(IPAddress.Loopback, listenPort);
                 })
                .UseContentRoot(contentRoot)
                // .ConfigureServices(InitializeServices)
@@ -84,7 +90,45 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 
             throw new Exception($"Project root could not be located using the application root {applicationBasePath}.");
         }
+        protected IWebElement FindItemTextInputBox()
+        {
 
+            // Francis starts a new list by entering a new item. He
+            // is less interesting than Edith...
+            return webDriver.FindElement(By.Name("Item.Text"));
+        }
+        protected void WaitForRowInListTable(string rowText)
+        {
+            var startTime = DateTime.Now;
+            Stopwatch sw = Stopwatch.StartNew();
+
+            while (true)
+            {
+                try
+                {
+                    var table = webDriver.FindElement(By.Id("id_list_table"));
+                    var rows = table.FindElements(By.TagName("tr"));
+                    //Assert.Contains(rows, row => row.Text == rowText);
+                    rows.Should().Contain(row => row.Text == rowText, $"[{rowText}] not found in table");
+                    Console.WriteLine("Elapsed miliseconds: {0}", sw.ElapsedMilliseconds);
+                    sw.Stop();
+                    return;
+                }
+                catch (WebDriverException)
+                {
+                    if (sw.ElapsedMilliseconds > MAX_WAIT)
+                    {
+                        Console.WriteLine("Elapsed miliseconds: {0}", sw.ElapsedMilliseconds);
+                        sw.Stop();
+                        webDriver.Quit();
+                        throw;
+                    }
+                    Console.WriteLine("Going to sleep for half second");
+                    Thread.Sleep(500);
+
+                }
+            }
+        }
         public void Dispose()
         {
             webDriver.Dispose();

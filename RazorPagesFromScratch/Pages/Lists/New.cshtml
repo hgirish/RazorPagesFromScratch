@@ -6,6 +6,7 @@
 
     <h1>Your To-Do list</h1>
     <form method="post" action="/lists/new" asp-antiforgery="true">
+        <div asp-validation-summary="All"></div>
         <input asp-for="Item.Text" placeholder="Enter a to-do item" />
     </form>
     <table id="id_list_table">
