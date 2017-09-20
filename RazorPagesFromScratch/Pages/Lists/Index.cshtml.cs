@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPagesFromScratch.Models;
+using Newtonsoft.Json;
 
 namespace RazorPagesFromScratch.Pages.Lists
 {
@@ -25,9 +26,21 @@ namespace RazorPagesFromScratch.Pages.Lists
             Items = items.ToList();
             if (TempData.ContainsKey("ModelState"))
             {
-                ModelState.Merge((ModelStateDictionary)TempData["ModelState"]);
+                var tempdata = TempData["ModelState"].ToString();
+                var errors = JsonConvert.DeserializeObject<List<KeyValuePair<string,string>>>(tempdata);
+                if (errors != null)
+                {
+                    foreach (KeyValuePair<string, string> item in errors)
+                    {
+                        Console.WriteLine($"{item.Key}:{item.Value}");
+                        ModelState.AddModelError(item.Key, item.Value);
+                    }
+                }
+
+                //ModelState.AddModelError("Item.Text", "You can't have an empty list item");
+
             }
-                
+
             return Page();
         }
     }

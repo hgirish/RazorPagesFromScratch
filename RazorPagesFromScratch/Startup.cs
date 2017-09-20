@@ -17,6 +17,7 @@ namespace RazorPagesFromScratch
             //{
             //    options.UseInMemoryDatabase("superlist-inmemory");
             //});
+            services.AddSession();
             SetUpDatabase(services);
             services.AddMvc()
                 .AddRazorPagesOptions(
@@ -30,10 +31,11 @@ namespace RazorPagesFromScratch
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            app.UseSession();
+            //if (env.IsDevelopment())
+            //{
                 app.UseDeveloperExceptionPage();
-            }
+            //}
             // within your Configure method:
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
               .CreateScope())
@@ -41,6 +43,7 @@ namespace RazorPagesFromScratch
                 var dbContext = serviceScope.ServiceProvider.GetService<AppDbContext>();
                 EnsureDatabaseCreated(dbContext);
             }
+            app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseMvc();
         }
