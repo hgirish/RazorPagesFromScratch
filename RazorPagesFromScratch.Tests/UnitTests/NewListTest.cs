@@ -49,7 +49,7 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             var correctList = SeedTodoList();
             var response = await PostTextAsync("A new list item", correctList.Id);
             
-            response.AssertRedircts( $"/lists/{correctList.Id}/");
+            response.AssertRedircts( $"/Lists/{correctList.Id}");
 
         }
         [Fact]
@@ -61,7 +61,24 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             var responseString = await response.Content.ReadAsStringAsync();
             responseString.Should().Contain($"action=\"/lists/{correctList.Id}/AddItem\"");
         }
-        
+        [Fact]
+        public async Task test_invalid_list_items_arent_savedAsync()
+        {
+            var response = await _client.GetAsync("/"); // this returns cookies in response
+            response.EnsureSuccessStatusCode();
+            string antiForgeryToken = await AntiForgeryHelper.ExtractAntiForgeryToken(response);
+            var formPostBodyData = new Dictionary<string, string>
+            {
+                { "__RequestVerificationToken", antiForgeryToken}, // Add token        
+                { "Item.Text", ""}
+            };
+            // Copy cookies from response
+            var requestMessage = PostRequestHelper.CreateWithCookiesFromResponse(
+                $"/lists/new", formPostBodyData, response);
+            response = await _client.SendAsync(requestMessage);
+            db.TodoLists.Count().Should().Be(0);
+            db.Items.Count().Should().Be(0);
+        }
 
         private async Task<HttpResponseMessage> PostTextAsync(string text, int listId)
         {

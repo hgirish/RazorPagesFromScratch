@@ -33,18 +33,10 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             TodoList correctList = SeedTodoList();
             var itemText = "A new item for an existing list";
             var response = await PostTextAsync(correctList, itemText);
-            response.AssertRedircts($"/lists/{correctList.Id}/");
+            response.AssertRedircts($"/Lists/{correctList.Id}");
         }
 
-        private TodoList SeedTodoList()
-        {
-            var otherList = new TodoList();
-            var correctList = new TodoList();
-            db.TodoLists.Add(otherList);
-            db.TodoLists.Add(correctList);
-            db.SaveChanges();
-            return correctList;
-        }
+     
 
         private async Task<HttpResponseMessage> PostTextAsync(TodoList list,string text)
         {
