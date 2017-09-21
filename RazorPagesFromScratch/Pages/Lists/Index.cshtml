@@ -14,6 +14,7 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input asp-for="Item.Text" placeholder="Enter a to-do item" class="form-control input-lg" />
                 <span asp-validation-for="Item.Text" class="text-danger"></span>
+                <input  type="hidden" value="@listId" name="Item.ListId" />
             </form>
         </div>
     </div>
