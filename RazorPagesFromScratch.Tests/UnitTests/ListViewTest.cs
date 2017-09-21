@@ -6,6 +6,7 @@ using RazorPagesFromScratch.Models;
 using Xunit;
 using System.Linq;
 using FluentAssertions;
+using System.Net;
 
 namespace RazorPagesFromScratch.Tests.UnitTests
 {
@@ -31,6 +32,19 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             TodoList correctList = SeedTodoList();
             var response = await PostTextAsync(correctList, text, $"/lists/{correctList.Id}");
             response.Headers.Location.Should().Be($"/Lists/{correctList.Id}");
+        }
+        [Fact]
+        public async Task test_validation_errors_end_up_on_lists_pageAsync()
+        {
+            TodoList correctList = SeedTodoList();
+            var response = await PostTextAsync(correctList, "", $"/lists/{correctList.Id}/");
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            
+            string expected_error =  "You can't have an empty list item";
+            var responseString = await response.Content.ReadAsStringAsync();
+            responseString = WebUtility.HtmlDecode(responseString);
+            responseString.Should().Contain("template: list.html");
+            responseString.Should().Contain(expected_error);
         }
     }
 }

@@ -10,7 +10,7 @@
 
 
             <h1>Your To-Do list</h1>
-            <form method="post" action="/lists/@listId/" asp-antiforgery="true">
+            <form method="post"  asp-route-id="@listId" asp-antiforgery="true">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input asp-for="Item.Text" placeholder="Enter a to-do item" class="form-control input-lg" />
                 <span asp-validation-for="Item.Text" class="text-danger"></span>
@@ -29,3 +29,4 @@
 
             </table>
             </div></div>
+<span class="hidden">template: list.html</span>

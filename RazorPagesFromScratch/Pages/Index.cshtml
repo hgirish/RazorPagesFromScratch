@@ -8,7 +8,7 @@
     <div class="text-center">
 
         <h1>@ViewBag.HeaderText</h1>
-        <form method="post" action="/lists/new" asp-antiforgery="true">
+        <form method="post" asp-page="Lists/New" >
             <input asp-for="Item.Text" placeholder="Enter a to-do item" class="form-control input-lg" />
             <span asp-validation-for="Item.Text" class="text-danger"></span>
         </form>
