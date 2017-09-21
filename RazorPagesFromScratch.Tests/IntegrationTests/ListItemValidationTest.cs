@@ -7,13 +7,12 @@ using Xunit;
 
 namespace RazorPagesFromScratch.Tests.IntegrationTests
 {
-
+    [Trait("Category", "JS")]
     public class ListItemValidationTest
        : SeleniumTestFixture<IntegrationTestStartup>
     {
 
-        [Fact]
-        [Trait("Category", "JS")]
+        [Fact]        
         public void test_cannot_add_empty_list_items()
         {
             // Edith goes to the home page and accidentally tries to submit
@@ -60,6 +59,29 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             WaitForRowInListTable("2: Make tea");
            /* */
             
+        }
+        [Fact]
+        public void test_cannot_add_duplicate_items()
+        {
+            // Edith goes to the home page and starts a new list
+            webDriver.Url = BaseAddress;
+            const string buyWellies = "Buy wellies";
+            FindItemTextInputBox().SendKeys(buyWellies);
+            FindItemTextInputBox().SendKeys(Keys.Enter);
+            WaitForRowInListTable("1: Buy wellies");
+
+            // She accidentally tries to enter a duplicate item
+            FindItemTextInputBox().SendKeys(buyWellies);
+            FindItemTextInputBox().SendKeys(Keys.Enter);
+
+            // She sees a helpful error message
+            var errorText = string.Empty;
+            WaitFor(() =>
+            {
+                errorText = webDriver.FindElement(By.CssSelector(".field-validation-error")).Text;
+                return !string.IsNullOrEmpty(errorText);
+            });
+            errorText.Should().Be("You've already got this in our list");
         }
 
       

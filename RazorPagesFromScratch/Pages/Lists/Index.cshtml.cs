@@ -50,6 +50,12 @@ namespace RazorPagesFromScratch.Pages.Lists
             {
                 return Page();
             }
+            var existingItem = _context.Items.Where(x => x.Text == Item.Text && x.ListId == id);
+            if (existingItem.Any())
+            {
+                ModelState.AddModelError("Item.Text", "You've already got this in your list");
+                return Page();
+            }
 
             var list = _context.TodoLists.Find(id);
             Item.List = list;

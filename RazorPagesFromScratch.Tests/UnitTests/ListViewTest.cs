@@ -46,5 +46,24 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             responseString.Should().Contain("template: list.html");
             responseString.Should().Contain(expected_error);
         }
+        [Fact]
+        public async Task test_duplicate_item_validation_errors_end_up_on_lists_pageAsync()
+        {
+            var text = "textey";
+            TodoList correctList = SeedTodoList();
+            var item1 = new Item { Text = text, List = correctList };
+            db.Items.Add(item1);
+            db.SaveChanges();
+            var response = await PostTextAsync(correctList, text, $"/lists/{correctList.Id}/");
+            //response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            var expected_error = "You've already got this in your list";
+            responseString = WebUtility.HtmlDecode(responseString);
+            responseString.Should().Contain("template: list.html");
+            responseString.Should().Contain(expected_error);
+            db.Items.Count().Should().Be(1);
+
+        }
     }
 }
