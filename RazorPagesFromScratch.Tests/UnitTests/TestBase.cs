@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Collections.Generic;
+using Xunit;
 
 namespace RazorPagesFromScratch.Tests.UnitTests
 {

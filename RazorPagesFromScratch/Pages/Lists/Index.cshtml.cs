@@ -43,5 +43,20 @@ namespace RazorPagesFromScratch.Pages.Lists
 
             return Page();
         }
+        public IActionResult OnPost(int id)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            var list = _context.TodoLists.Find(id);
+            Item.List = list;
+            _context.Items.Add(Item);
+            _context.SaveChanges();
+            return RedirectToPage("Index", routeValues: new { id = id });
+            //return Redirect($"/lists/{list.Id}/");
+        }
     }
 }

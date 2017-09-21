@@ -29,7 +29,8 @@ namespace RazorPagesFromScratch.Tests.UnitTests
         public async Task CanSaveAPostRequest()
         {
             var correctList = SeedTodoList();
-            var response = await PostTextAsync("A new list item", correctList.Id);
+            var response = await PostTextAsync(correctList, "A new list item", $"/lists/{correctList.Id}/");
+
             var redirectLocation = response.Headers.Location.ToString();
             var items = _db.Items;
             items.Count().Should().Be(1);
@@ -47,7 +48,7 @@ namespace RazorPagesFromScratch.Tests.UnitTests
         public async Task RedirectsAfterPOSTAsync()
         {
             var correctList = SeedTodoList();
-            var response = await PostTextAsync("A new list item", correctList.Id);
+            var response = await PostTextAsync(correctList,"A new list item", $"/lists/{correctList.Id}/");
             
             response.AssertRedircts( $"/Lists/{correctList.Id}");
 
@@ -59,7 +60,7 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             var response = await Client.GetAsync($"/Lists/{correctList.Id}/");
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
-            responseString.Should().Contain($"action=\"/lists/{correctList.Id}/AddItem\"");
+            responseString.Should().Contain($"action=\"/lists/{correctList.Id}/\"");
         }
         [Fact]
         public async Task test_invalid_list_items_arent_savedAsync()
@@ -80,30 +81,22 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             db.Items.Count().Should().Be(0);
         }
 
-        private async Task<HttpResponseMessage> PostTextAsync(string text, int listId)
-        {
-            var response = await _client.GetAsync("/"); // this returns cookies in response
-            response.EnsureSuccessStatusCode();
-            string antiForgeryToken = await AntiForgeryHelper.ExtractAntiForgeryToken(response);
-            var formPostBodyData = new Dictionary<string, string>
-            {
-                { "__RequestVerificationToken", antiForgeryToken}, // Add token        
-                { "Item.Text", text}
-            };
-            // Copy cookies from response
-            var requestMessage = PostRequestHelper.CreateWithCookiesFromResponse(
-                $"/lists/{listId}/AddItem", formPostBodyData, response);
-            response = await _client.SendAsync(requestMessage);
-            return response;
-        }
-        private TodoList SeedTodoList()
-        {
-            var otherList = new TodoList();
-            var correctList = new TodoList();
-            db.TodoLists.Add(otherList);
-            db.TodoLists.Add(correctList);
-            db.SaveChanges();
-            return correctList;
-        }
+        //private async Task<HttpResponseMessage> PostTextAsync(string text, int listId)
+        //{
+        //    var response = await _client.GetAsync("/"); // this returns cookies in response
+        //    response.EnsureSuccessStatusCode();
+        //    string antiForgeryToken = await AntiForgeryHelper.ExtractAntiForgeryToken(response);
+        //    var formPostBodyData = new Dictionary<string, string>
+        //    {
+        //        { "__RequestVerificationToken", antiForgeryToken}, // Add token        
+        //        { "Item.Text", text}
+        //    };
+        //    // Copy cookies from response
+        //    var requestMessage = PostRequestHelper.CreateWithCookiesFromResponse(
+        //        $"/lists/{listId}/AddItem", formPostBodyData, response);
+        //    response = await _client.SendAsync(requestMessage);
+        //    return response;
+        //}
+      
     }
 }

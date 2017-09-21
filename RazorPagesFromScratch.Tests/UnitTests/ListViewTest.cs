@@ -4,9 +4,13 @@ using System.Text;
 using System.Threading.Tasks;
 using RazorPagesFromScratch.Models;
 using Xunit;
+using System.Linq;
+using FluentAssertions;
 
 namespace RazorPagesFromScratch.Tests.UnitTests
 {
+    [Trait("Category", "Unit")]
+    [Trait("Name","ListView")]
     public class ListViewTest : TestBase
     {
         [Fact]
@@ -14,7 +18,19 @@ namespace RazorPagesFromScratch.Tests.UnitTests
         {
             var text = "A new item for an existing list";
             TodoList correctList = SeedTodoList();
-            PostTextAsync(correctList,text, $"/lists/")
+           var response = await PostTextAsync(correctList, text, $"/lists/{correctList.Id}/");
+            db.Items.Count().Should().Be(1);
+            var new_item = db.Items.First();
+            new_item.Text.Should().Be(text);
+            new_item.List.Should().Equals(correctList);
+        }
+        [Fact]
+        public async Task test_POST_redirects_to_list_viewAsync()
+        {
+            var text = "A new item for an existing list";
+            TodoList correctList = SeedTodoList();
+            var response = await PostTextAsync(correctList, text, $"/lists/{correctList.Id}");
+            response.Headers.Location.Should().Be($"/Lists/{correctList.Id}");
         }
     }
 }
