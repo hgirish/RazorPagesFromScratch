@@ -98,6 +98,7 @@ namespace RazorPagesFromScratch
             }
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }
         public virtual void SetUpDatabase(IServiceCollection services)
