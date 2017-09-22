@@ -1,10 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RazorPagesFromScratch.Models;
 namespace RazorPagesFromScratch.Tests.UnitTests
 {
     public class UnitTestStartup : Startup
     {
+        public UnitTestStartup(IConfiguration configuration) : base(configuration)
+        {
+        }
+
         public override void SetUpDatabase(IServiceCollection services)
         {
             //var connectionStringBuilder = new SqliteConnectionStringBuilder

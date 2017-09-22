@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RazorPagesFromScratch.Models;
 
@@ -6,6 +7,10 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
 {
     public class IntegrationTestStartup : Startup
     {
+        public IntegrationTestStartup(IConfiguration configuration) : base(configuration)
+        {
+        }
+
         public override void SetUpDatabase(IServiceCollection services)
         {
             //var connectionStringBuilder = new SqliteConnectionStringBuilder

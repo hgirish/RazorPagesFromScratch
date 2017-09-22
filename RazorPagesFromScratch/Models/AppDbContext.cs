@@ -6,10 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace RazorPagesFromScratch.Models
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ListUser>
     {
       
         public AppDbContext( DbContextOptions<AppDbContext> options) : base(options)
@@ -17,6 +18,9 @@ namespace RazorPagesFromScratch.Models
         }
         public DbSet<Item> Items { get; set; }
         public DbSet<TodoList> TodoLists { get; set; }
+        public DbSet<Token> Tokens { get; set; }
+        public DbSet<ListUser> ListUsers { get; set; }
+
         public override int SaveChanges()
         {
             ValidateEntities();
@@ -53,6 +57,7 @@ namespace RazorPagesFromScratch.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Item>()
                 .HasAlternateKey(i => new { i.ListId, i.Text })
                 .HasName("AltenateKey_TextListId");
