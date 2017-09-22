@@ -30,7 +30,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
                 return !string.IsNullOrEmpty(errorText);
 
             });
-            Console.WriteLine(errorText);
+            //Console.WriteLine(errorText);
            errorText.Should().Be("You can't have an empty list item");
 
             // She tries again with some text for the item, which now works

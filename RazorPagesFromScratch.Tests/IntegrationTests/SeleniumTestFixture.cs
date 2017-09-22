@@ -98,6 +98,10 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
             // is less interesting than Edith...
             return webDriver.FindElement(By.Name("Item.Text"));
         }
+        protected IWebElement GetEmailInputBox()
+        {
+            return webDriver.FindElement(By.Name("email"));
+        }
         protected void WaitForRowInListTable(string rowText)
         {
             var startTime = DateTime.Now;
