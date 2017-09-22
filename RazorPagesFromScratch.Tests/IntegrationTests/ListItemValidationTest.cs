@@ -81,7 +81,7 @@ namespace RazorPagesFromScratch.Tests.IntegrationTests
                 errorText = webDriver.FindElement(By.CssSelector(".field-validation-error")).Text;
                 return !string.IsNullOrEmpty(errorText);
             });
-            errorText.Should().Be("You've already got this in our list");
+            errorText.Should().Be("You've already got this in your list");
         }
 
       

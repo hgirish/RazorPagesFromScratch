@@ -32,10 +32,14 @@ namespace RazorPagesFromScratch
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseSession();
-            //if (env.IsDevelopment())
-            //{
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-            //}
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
             // within your Configure method:
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
               .CreateScope())
