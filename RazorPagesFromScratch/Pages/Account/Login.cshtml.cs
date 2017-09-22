@@ -56,11 +56,13 @@ namespace RazorPagesFromScratch.Pages.Account
             if (user == null)
             {
                 Console.Error.WriteLine("ListUser does not exist");
-                user = new ListUser { Email = token.Email ,
-                UserName = token.Email,
-                EmailConfirmed = true,
-                PasswordHash = "password",
-                SecurityStamp = Guid.NewGuid().ToString()};
+                user = new ListUser {
+                    Email = token.Email 
+                ,UserName = token.Email
+              // ,EmailConfirmed = true
+                  //   ,PasswordHash = "password"
+                      ,SecurityStamp = Guid.NewGuid().ToString()
+                };
                 dbContext.ListUsers.Add(user);
                 dbContext.SaveChanges();
             }
