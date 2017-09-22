@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity;
+using RazorPagesFromScratch.Models;
 
 namespace RazorPagesFromScratch.Pages.Account
 {
     public class LogoutModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        public LogoutModel(SignInManager<IdentityUser> signInManager)
+        private readonly SignInManager<ListUser> _signInManager;
+        public LogoutModel(SignInManager<ListUser> signInManager)
         {
             _signInManager = signInManager;
         }
