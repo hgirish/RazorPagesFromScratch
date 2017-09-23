@@ -60,7 +60,7 @@ namespace RazorPagesFromScratch.Tests.UnitTests
             var response = await Client.GetAsync($"/Lists/{correctList.Id}/");
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
-            responseString.Should().Contain($"action=\"/Lists/{correctList.Id}/\"");
+            responseString.Should().Contain($"action=\"/Lists/{correctList.Id}");
         }
         [Fact]
         public async Task test_invalid_list_items_arent_savedAsync()
